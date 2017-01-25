@@ -1,0 +1,299 @@
+---
+title: "Project Report"
+author: "Palash Siddamsettiwar, M10676557"
+date: "December 10, 2016"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    number_sections: true
+    css: style.css
+    theme: journal
+
+---
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Packages Used {-}
+* RCurl: To read data off URLs
+* DT: To format data into good-looking tables on Markdown
+* tidyverse: To clean data and create tibbles
+* rworldmap: To create maps and import shapefiles in R
+* ggplot2: To create charts and maps in R
+* Hmisc: To perform statistical analysis (correlational analysis, in our case) in R
+
+``` {r, message=FALSE, warning=FALSE}
+library("RCurl")
+library("DT")
+library("tidyverse")
+library("rworldmap")
+library("ggplot2")
+library("Hmisc")
+```
+<br>
+
+
+#Synopsis {.tabset}
+##Problem Statement
+Through this data we attempt to explain CO2 and Methane emissions growth over the years by understanding energy use and demographics. 
+
+We look at individual countries and their indicators such as
+1. Literacy
+2. Poverty
+3. GINI Index (Index that looks at divide between poor and rich)
+4. Population
+5. Unemployment Rate
+6. Life Expectancy
+7. Sustainable energy use
+
+and try to find which factors affect CO2 and Methane emissions
+
+  
+##Data Description and Source
+The main data file used contains details about carbon emissions and economic indicators of various countries. 
+
+The main data is sourced from [here](http://databank.worldbank.org/data/reports.aspx?Code=NY.GDP.MKTP.CD&id=af3ce82b&report_name=Popular_indicators), Worldbank's data repository for global indicators. 
+
+
+The second data file contains data about sustainable energy sources and their share in total energy consumption.
+
+Data for the sustainable energy use is sourced from [here](http://data.worldbank.org/data-catalog/sustainable-energy-for-all), Worldbank's dataset on the 'Sustainable Energy for All' initiative.
+
+Here I have downloaded the datasets as an excel along with it's codebook and uploaded it to my Google Drive.  
+
+
+##Methodology Used
+In this project, we looked at the carbon emissions against many indicators of a nation, through the use of tecniques such as correlation, visualization techniques and times series analysis. Using these analyses, we try to understand how we can change the trends and pinpoint the most problematic countries and steps they can take to reduce their carbon footprint. We also look at their renewable energy use to understand how they have attempted to reduce carbon emissions.
+
+##Summary
+From the analysis, relationships between development, demographics and energy use is linked to CO2 emissions. Main countries are found who are causing the highest amount of emissions, and their energy use over the years, renewable energy consumption, etc are compared. Various demographics and economic parameters are compared against CO2 emissions to understand if there is a relation between these. Conclusions are reported in the summary section.
+
+#Data Preparation {.tabset}
+
+
+
+##Importing data
+
+The data is imported as follows:
+```{r message=FALSE}
+data_emissions <- getURL("https://docs.google.com/spreadsheets/d/1NLjID44TrPn6h1YaYLQNcImUD16Z_eVSrIv50_wVOrc/pub?gid=8560543&single=true&output=csv") #Data downloaded from Google Drive
+data_emissions <- as_tibble(read.csv(textConnection(data_emissions))) #Data stored as a tibble
+
+data_renewables <- getURL("https://docs.google.com/spreadsheets/d/11hCb1YGsnRZp7w3uCMToUYqpfxgt6jNcnhjXp6CcIvI/pub?gid=1118430051&single=true&output=csv") #Data downloaded from Google Drive
+data_renewables <- as_tibble(read.csv(textConnection(data_renewables))) #Data stored as a tibble
+
+
+data_country <- getURL("https://docs.google.com/spreadsheets/d/11hCb1YGsnRZp7w3uCMToUYqpfxgt6jNcnhjXp6CcIvI/pub?gid=268266810&single=true&output=csv") #Data downloaded from Google Drive
+data_country <- as_tibble(read.csv(textConnection(data_country))) #Data stored as a tibble
+```
+
+
+##Codebooks
+The following tables list the data codebooks to better understand the data:
+
+**1. Emissions Data**:
+Data is present in a 'long' form with all the variables present in a single column and years present in the columns. Missing values are present often in the data and coded as '..'. 
+``` {r, message=FALSE, echo=FALSE}
+data_source_emissions <- getURL("https://docs.google.com/spreadsheets/d/1NLjID44TrPn6h1YaYLQNcImUD16Z_eVSrIv50_wVOrc/pub?gid=374295587&single=true&output=csv") #Data downloaded from Google Drive
+data_source_emissions <- as_tibble(read.csv(textConnection(data_source_emissions))) #Data stored as a tibble
+datatable(data_source_emissions, style="bootstrap", options = list(scrollX = TRUE))
+```
+
+**2. Renewables Data**:
+Data is present in a 'long' form with all the variables present in a single column and years present in the columns. Missing values are present often in the data and are coded as NULL.
+``` {r, message=FALSE, echo=FALSE}
+data_source_renewables <- getURL("https://docs.google.com/spreadsheets/d/11hCb1YGsnRZp7w3uCMToUYqpfxgt6jNcnhjXp6CcIvI/pub?gid=1441570070&single=true&output=csv") #Data downloaded from Google Drive
+data_source_renewables <- as_tibble(read.csv(textConnection(data_source_renewables))) #Data stored as a tibble
+datatable(data_source_renewables, style="bootstrap", options = list(scrollX = TRUE))
+```
+
+**3. Countries' Data**:
+This data is present for all countries, which regions they fall into and their economic classification.
+``` {r, message=FALSE, echo=FALSE}
+data_source_countries <- getURL("https://docs.google.com/spreadsheets/d/11hCb1YGsnRZp7w3uCMToUYqpfxgt6jNcnhjXp6CcIvI/pub?gid=285873499&single=true&output=csv") #Data downloaded from Google Drive
+data_source_countries <- as_tibble(read.csv(textConnection(data_source_countries))) #Data stored as a tibble
+datatable(data_source_countries, style="bootstrap", options = list(scrollX = TRUE))
+```
+
+
+##Data Cleaning
+The data in the three tables is cleaned and merged as follows:
+
+1. **data_emissions**: Change '..'s to NAs <br>
+2. **data_emissions**: Convert data for year from wide to long <br>
+3. **data_emissions**: Convert data for Indicators from long to wide <br>
+4. **data_emissions**: Remove unneccesary columns <br>
+5. **data_emissions**: Change column names for years <br>
+6. **data_renewables**: Convert data for year from wide to long <br>
+7. **data_renewables**: Convert data for Indicators from long to wide <br>
+8. **data_renewables**: Remove unneccesary columns <br>
+8. **data_renewables**: Change column names for years <br>
+10. **data_country**: Remove unneccasary columns <br>
+11. Merge all three tables into one **final** data <br>
+12. Filter the **final** table for years 1996:2010 <br>
+13. Filter the table for the 15 top countries by population <br>
+14. Create new column for total CO2 consumption of a ountry from its per capita consumption and population <br>
+
+``` {r message=FALSE, message=FALSE}
+data_emissions[data_emissions=='..'] <- NA
+data_emissions <- data_emissions %>%
+  gather(key='Year', value='value', `X1992..YR1992.`:`X2014..YR2014.`) %>%
+  spread(key='Series.Code', value='value') %>%
+  select(-(`Country.Name`)) %>%
+  mutate(Year = substr(Year, 2, 5))
+
+data_renewables <- data_renewables %>%
+  gather(key='Year', value='value', `X1990`:`X2010`) %>%
+  select(-(`Indicator_Name`)) %>%
+  spread(key='Indicator_Code', value='value') %>%
+  select(c(`Country_Code`, `Year`, `5.1_RE.SHARE.IN.CAPACITY`, `1.1_TOTAL.FINAL.ENERGY.CONSUM`, `2.1_SHARE.TOTAL.RE.IN.TFEC`)) %>%
+  mutate(Year = substr(Year, 2, 5))
+
+data_country <- data_country[c(1, 3, 4, 6)]
+
+final <- 
+data_emissions %>%
+  rename(Country_Code = Country.Code) %>%
+  left_join(data_renewables, by =c("Country_Code", "Year")) %>%
+  right_join(data_country, by= c("Country_Code"="CountryCode")) %>%
+  filter(Year %in% c(1996:2010)) %>%
+  group_by(Country_Code) %>%
+  filter(Region != "Aggregates")
+
+top_countries <- head(final[final$Year==2010,][order(-as.numeric(final[final$Year==2010,]$`SP.POP.TOTL`)),], 30)$Country_Code
+final <- final[final$Country_Code %in% top_countries, ]
+final[c(3:15)] <- sapply(final[c(3:15)],as.numeric)
+final$EN.ATM.CO2E <- final$EN.ATM.CO2E.PC*final$SP.POP.TOTL
+final$EG.USE.KG.OE <- final$EG.USE.PCAP.KG.OE*final$SP.POP.TOTL
+```
+
+##Cleaned Dataset
+``` {r message=FALSE, message=FALSE}
+datatable(final, 
+          style="bootstrap", 
+          options = list(scrollX = TRUE))
+```
+
+##Important Metrics
+**Total Number of Countries Considered**: `r length(unique(final$Country_Code))` <br>
+
+**Years Considered**: `r min(final$Year)`:`r max(final$Year)` <br>
+
+**Regions**: `r datatable(as.data.frame(unique(final$Region), col.names= c("Regions")))` <br>
+
+**Income Levels**:  `r datatable(as.data.frame(unique(final$Income.Group ), col.names= c("Income Groups")))`<br>
+
+#Exploratory Data Analysis
+
+##Top Emitters {.tabset}
+
+###Per Capita Emissions
+Let's first look at the countries we have in our data and how their carbon Emissions stack up.
+Clearly, US and Russia seem to be the largest culprits as far as per capita emission of CO2 (metric tons) goes.
+
+``` {r warning=FALSE, message=FALSE}
+map.world <- map_data(map="world")
+a<- left_join(final[c(16, 18, 5)][final$Year==2010,], map.world[c(5, 2, 1, 3, 4)], by = c("Table.Name"="region"))
+
+ggplot()+ 
+  theme(legend.position="none")+ 
+  geom_map(data=a, map=map.world, aes(map_id=`Table.Name`, x=long, y=lat, fill=`EN.ATM.CO2E.PC`))+
+  scale_fill_gradient(low = "green", high = "red", guide = "colourbar")+ 
+  coord_equal()
+```
+
+
+###Total Emissions
+Looking at total CO2 emission levels (metric tons), we can see that USA and China jump out.
+
+``` {r warning=FALSE, message=FALSE}
+map.world <- map_data(map="world")
+a<- left_join(final[c(16, 18, 19)][final$Year==2010,], map.world[c(5, 2, 1, 3, 4)], by = c("Table.Name"="region"))
+
+ggplot()+ 
+  theme(legend.position="none")+ 
+  geom_map(data=a, map=map.world, aes(map_id=`Table.Name`, x=long, y=lat, fill=`EN.ATM.CO2E`))+
+  scale_fill_gradient(low = "green", high = "red", guide = "colourbar")+ 
+  coord_equal()
+```
+
+
+###Over the years
+Now let us look at five countries specifically and try to understand the recent trend in their emissions and economies- China, USA, India, Russia and Japan
+
+**Emissions:**
+``` {r warning=FALSE, message=FALSE}
+final %>%
+  filter(Country_Code %in% c("CHN","USA","RUS","IND","JPN")) %>%
+  select(Table.Name, Year, EN.ATM.CO2E) %>%
+  ggplot(aes(x=Year, y=EN.ATM.CO2E, group=Table.Name, colour=Table.Name)) +
+    geom_line() +
+    geom_point() +
+    labs(y="Total Emissions per year (metric tons)")
+```
+
+**Energy Use:**
+Clearly, we can find a direct correlation between Energy Use and CO2 Emissions. For example, USA's steady high use of energy can be refleted in their CO2 emissions. China's high growth over the years in both the metrics is also pretty related.
+
+``` {r warning=FALSE, message=FALSE}
+final %>%
+  filter(Country_Code %in% c("CHN","USA","RUS","IND","JPN")) %>%
+  select(Table.Name, Year, EG.USE.KG.OE) %>%
+  ggplot(aes(x=Year, y=EG.USE.KG.OE, group=Table.Name, colour=Table.Name)) +
+    geom_line() +
+    geom_point() +
+    labs(y="Energy Use per pear (kgs of oil equivalent)")
+```
+
+
+###Renewable Energy Sources
+Let's try to look at USA and China's renewable energy usage and if these countries have had growth in renewable energy production.
+We can clearly see that a lack of funding in renewable energies could be a major reason for the CO2 emissions.
+
+``` {r warning=FALSE, message=FALSE}
+final %>%
+  filter(Country_Code %in% c("CHN","USA","RUS","IND","JPN")) %>%
+  select(Table.Name, Year, `2.1_SHARE.TOTAL.RE.IN.TFEC` ) %>%
+  ggplot(aes(x=Year, y=`2.1_SHARE.TOTAL.RE.IN.TFEC`)) + 
+  geom_bar(stat = "identity") +
+  facet_wrap(~Table.Name, nrow=1) + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  labs(y= "Renewable Energy %")
+```
+
+##Correlational Analysis
+``` {r warning=FALSE, message=FALSE}
+a <- as.data.frame(rcorr(as.matrix(final[c(5, 3, 4, 6:15, 19)]))[[1]])[c(1,14)]
+b <- as.data.frame(rcorr(as.matrix(final[c(5, 3, 4, 6:15, 19)]))[[3]])[c(1,14)]
+correlations <- cbind(a,b)[c(1,3,2,4)]
+correlations[] <- round(correlations, 2)
+names(correlations) <- c("with Per Capita Emissions", "p-value", "with Total Emissions", "p-value")
+datatable(correlations)
+```
+From here, we can make some interesting conclusions (all results are found to be significant at a 95% significance level): <br>
+* Factors affecting per capita carbon emissions aren't necessarily the factors affecting total CO2 emissions of a country <br>
+**Per Capita Emissions** <br>
+1. Energy use is highly correlated to emissions, obviously. <br>
+2. % of Renewable Energy in Energy Consumption is inversely related to Emissions. <br>
+
+**Total Emissions** <br>
+1. Methane and CO2 emissions are highly related to each other. <br>
+2. Total population is related to total emissions, obviously. <br>
+3. Demographics aren't necessarily tied to CO2 emissions directly. <br>
+
+#Summary
+In this project, we analyzed the patterns around Carbon Emissions and how they are related to countries' demographics, economic indicators and sustainable energy use. We also looked at the trends of countries with the highest Carbon and Methane Emissions. We can see that using our Data from Worldbank for these metrics helped us gain helpful insights into the major factors at play regarding global warming.
+
+Some of these insights are: <br>
+1. China and US are undoubtedly, two of the highest contributors to the growth of carbon emissions and global warming. <br>
+2. Their high energy usage and high growth in energy usage is huge point of concern. <br>
+3. Renewable energies is a direct answer to reduce energy emissions. <br>
+4. However, development seems to be an indicator of moving away from renewable energies and towards cheaper, non-renewable sources such as coal. <br>
+5. Demographics doesn't seem to play a direct role in CO2 emissions <br>
+6. Methane and CO2 emissions pretty mucch go hand in hand, and hence, steps can be taken in tandem to reduce both. <br>
