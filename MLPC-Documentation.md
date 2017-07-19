@@ -397,16 +397,16 @@ The code working flow is as follows,
 
 Result example,
 
-| **Prod\_ID** | **fol\_predicted**        | **FOL\_Ratio** | **GPH\_Ratio** | **FOL\_Prediction\_confidence** | **GPH\_Prediction\_confidence** |
-|--------------|---------------------------|----------------|----------------|---------------------------------|---------------------------------|
-| Prod-1026102 | Kitchen Sinks             | 3.68379E+22    | 7.83845E+32    | High Confidence                 | Low Confidence                  |
-| Prod-1055452 | Iron Single Strap Saddles | 145247222.8    | 1.02849E+20    | Low Confidence                  | Low Confidence                  |
-| Prod-1056364 | Kitchen Sinks             | 935857.2256    | 1.076828898    | Low Confidence                  | Low Confidence                  |
+| Prod_ID      | fol_predicted             | FOL_Ratio   | FOL_Prediction_confidence |
+|--------------|---------------------------|-------------|---------------------------|
+| Prod-1026102 | Kitchen Sinks             | 3.68E+22    | High Confidence           |
+| Prod-1055452 | Iron Single Strap Saddles | 145247222.8 | Low Confidence            |
+| Prod-1056364 | Kitchen Sinks             | 935857.2256 | Low Confidence            |
 
-| **Prod\_ID** | **gph\_predicted**                                                                                                                                                    |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Prod-1026102 | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS |
-| Prod-1055452 | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|15 PIPE, VALVES AND FITTINGS|06 PIPE AND TUBING FITTINGS|15 PVC PIPE FITTINGS|18 PIPE WYES              |
-| Prod-1056364 | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS |
+| Prod_ID      | gph_predicted                                                                                              | GPH_Ratio   | GPH_Prediction_confidence |
+|--------------|------------------------------------------------------------------------------------------------------------|-------------|---------------------------|
+| Prod-1026102 | 16 PLUMBING - FINISHED>>04 PLUMBING FIXTURES, PARTS AND ACCESSORIES>>19 COMMERCIAL SINKS>>08 KITCHEN SINKS | 7.84E+32    | Low Confidence            |
+| Prod-1055452 | 15 PIPE, VALVES AND FITTINGS>>06 PIPE AND TUBING FITTINGS>>15 PVC PIPE FITTINGS>>18 PIPE WYES              | 1.03E+20    | Low Confidence            |
+| Prod-1056364 | 16 PLUMBING - FINISHED>>04 PLUMBING FIXTURES, PARTS AND ACCESSORIES>>19 COMMERCIAL SINKS>>08 KITCHEN SINKS | 1.076828898 | Low Confidence            |
 
 Please note: Differences in accuracy and high “Low Confidence” tagging in the result is due to the small sample data (200 rows) used.
