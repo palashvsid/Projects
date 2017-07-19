@@ -1,9 +1,8 @@
-<h1> PRODUCTION CATEGORIZATION USING MACHINE LEARNING </h1>
+<h1> PRODUCT CATEGORIZATION USING MACHINE LEARNING </h1>
 
-Powered By: Tredence Analytics Solutions
+<h3> Powered By: *Tredence Analytics Solutions*</h3> 
 
-Introduction:
-
+<h2> Introduction: </h2>
 The client requires an efficient product classification system, for easy
 navigation and product display on the client e-commerce website. This
 will allow customers to find their exact needs. Currently, out of the 3
@@ -19,8 +18,7 @@ product families not available in the training data. Hence, this will
 allow the client to increase its classification throughput, automate the
 process, minimize expenses and eliminate manual errors.
 
-Approach:
-
+<h2> Approach </h2> 
 Identifying the features of products within a product category will
 allow in efficient classification. We trained the machine learning
 algorithm on existing classified data and predicted the product family
@@ -40,7 +38,7 @@ this, a rigorous 4 step approach was followed,
     -   Misclassified SKUs were identified manually and removed from the
         data analysis
 
-2.  Data Modelling
+2.  Data Modeling
 
     -   Standard text mining techniques were used to convert the data
         into a document term matrix to build the model
@@ -48,16 +46,17 @@ this, a rigorous 4 step approach was followed,
     -   A set of machine learning algorithms including Ensemble methods
         were trained on a random sample
 
-3.  Data Validation
-
-    -   The trained models were tested on different set of SKUs
-
-4.  Confidence Interval
+4.  Confidence Levels
 
     -   A cross validated threshold value was computed to signify the
         confidence of the predictions
 
-Data Cleaning and Data Preparation:
+3.  Model Testing
+
+    -   The trained models were tested on different set of SKUs
+
+
+<h3> Data Cleaning and Data Preparation: </h3> 
 
 The data considered for the algorithm consists of ~70K SKU attributes.
 The data goes through a cleaning process to remove any discrepancies
@@ -118,8 +117,7 @@ the frequency of terms that occur in a collection of documents. In a
 document-term matrix, rows correspond to documents (SKU’s in this case)
 in the collection and columns correspond to terms (Dependent variables).
 
-DATA MODELING:
-
+<h3> Data Modeling: </h3>
 The document term matrix is split into the training and test set on an
 80:20 ratio. The identified features are considered as the independent
 variables and FOL link & GPH as the dependent variables for the modeling
@@ -149,21 +147,16 @@ process,
 
 4.  Validation and fine tuning (20% Sample)
 
-5.  Prediction
-
-The prediction accuracy is tested over multiple models and the model
-with the best accuracy is selected for future predictions.
-
-*Confidence Metric and Threshold Computation:*
-
+<h3>Confidence Metric and Threshold Computation </h3>
 Threshold is a probability based ratio to identify the confidence of the
 model. The ratio of the 1<sup>st</sup> and 2<sup>nd</sup> highest
 probabilities of a SKU is calculated to determine the threshold. It is
 used to distinguish between “high-confidence” and “low-confidence”
 predictions.
 
-*Model Selection:*
 
+
+<h3> Model Testing: </h3> 
 The predictive ability of each model was compared to determine which is
 to be used for product classification. A 5-Fold cross validation was
 carried out to validate the accuracy of the model.
@@ -171,20 +164,15 @@ carried out to validate the accuracy of the model.
 The neural network model is selected due to its higher accuracy and
 coverage,
 
-Without threshold:
-
+*Without threshold:*
 FOL: Accuracy = 94.1%
-
 GPH: Accuracy = 95.1%
 
-With threshold:
-
+*With threshold:*
 FOL: Accuracy = 99% Coverage = 75%
-
 GPH: Accuracy = 99% Coverage = 80%
 
 Model Results:
-
 Once trained on the ~50k SKU’s, the neural network model’s classifying
 ability is verified on the test set. Product categorization is done for
 FOL link and GPH classification. The required test set is fed into the
@@ -219,21 +207,8 @@ deviation of 1.1%.
 
 **Coverage: 9,934 / 12,482 = 80%**
 
-*Key Outputs:*
 
-The machine learning algorithm enables:
-
--   A 28X increase in the FOL throughput<sup>1</sup> with an overall
-    accuracy of 94%
-
--   A 50X increase in the GPH throughput with an overall accuracy of 95%
-
-Data Validation:
-
-The trained model was tested over different sets to check its accuracy.
-We trained our models on different sets and made repeated predictions
-for 500 samples of 500 observations each to find the variation in the
-accuracy.
+The trained model was tested over different sets to check its accuracy. We trained our models on different sets and made repeated predictions for 500 samples of 500 observations each to find the variation in the accuracy.
 
 The FOL accuracy was found to be consistent over multiple random samples
 
@@ -242,19 +217,16 @@ The FOL accuracy was found to be consistent over multiple random samples
 | **w/o threshold** | 94.1%       | 94.2%      | 1.1%          | 97.0%       | 90.6%       |
 | **w/ threshold**  | 99.0%       | 99.0%      | 0.4%          | 100.0%      | 97.6%       |
 
-The GPH accuracy was also found to be consistent over multiple random
-samples,
+The GPH accuracy was also found to be consistent over multiple random samples,
 
 | **GPH**           | **Average** | **Median** | **Std. Dev.** | **Maximum** | **Minimum** |
 |-------------------|-------------|------------|---------------|-------------|-------------|
 | **w/o threshold** | 95.1%       | 95.2%      | 1.0%          | 98.4%       | 92.2%       |
 | **w/ threshold**  | 99.0%       | 99.0%      | 0.4%          | 99.8%       | 97.4%       |
 
-Increasing the threshold increases the accuracy and reduces the
-variation but results in lesser data being predicted.
+Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
-Prediction of Unclassified SKU’s:
-
+*Prediction of Unclassified SKU’s:*
 Predictions on the 7K SKUs where GPH was not classified resulted in an
 accuracy of 97% with a coverage of 57% for FOL.
 
@@ -276,14 +248,22 @@ for 350 samples to find the variation in the accuracy. The Variation in
 the accuracy for FOL predictions varies by 1.1% for a random sample of
 350 SKUs.
 
-Challenges:
+<h2>Impact</h2>
+The machine learning algorithm enables:
 
+-   A 28X increase in the FOL throughput<sup>1</sup> with an overall
+    accuracy of 94%
+
+-   A 50X increase in the GPH throughput with an overall accuracy of 95%
+
+
+<h2>Challenges:</h2>
 *FOL:* Incomplete Data- Our model can only predict what it knows
 
 *GPH:* Unextractable data: data in product names
 
-Scope for Improvement:
 
+<h2>Scope for Improvement</h2>
 -   Use entire dataset for model building
 
 -   Continual feedback iterations
@@ -292,8 +272,8 @@ Scope for Improvement:
 
 -   Create post-prediction rules to accommodate class-specific nuances
 
-Code Explanation:
 
+<h2>Code- Working Flow<h2>
 The code working flow is as follows,
 
 1.  First, please set the working directory where the provided sample
@@ -453,5 +433,4 @@ Result example,
 | Prod-1055452 | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|15 PIPE, VALVES AND FITTINGS|06 PIPE AND TUBING FITTINGS|15 PVC PIPE FITTINGS|18 PIPE WYES              |
 | Prod-1056364 | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS |
 
-Please note: Differences in accuracy and high “Low Confidence” tagging
-in the result is due to the small sample data (200 rows) used.
+Please note: Differences in accuracy and high “Low Confidence” tagging in the result is due to the small sample data (200 rows) used.
