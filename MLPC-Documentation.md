@@ -46,7 +46,7 @@ this, a rigorous 4 step approach was followed,
     -   A set of machine learning algorithms including Ensemble methods
         were trained on a random sample
 
-3.  **Confidence Metric and Threshold Computation **
+3.  **Confidence Metric and Threshold Computation**
 
     -   A cross validated threshold value was computed to signify the
         confidence of the predictions
@@ -56,7 +56,7 @@ this, a rigorous 4 step approach was followed,
     -   The trained models were tested on different set of SKUs
 
 
-<h3> Data Cleaning and Data Preparation</h3> 
+<h3>Data Cleaning and Data Preparation</h3> 
 
 The data considered for the algorithm consists of ~70K SKU attributes.
 The data goes through a cleaning process to remove any discrepancies
@@ -79,8 +79,7 @@ excluded from the data:
 
     -   297 SKUs for FOL and 344 SKUs for GPH were excluded
 
-After exclusions, the dataset was reduced to ~62K row (~62k SKU
-attributes)
+After exclusions, the dataset was reduced to ~62K SKUs
 
 Independent Variables:
 
@@ -110,18 +109,10 @@ Dependent variables,
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
 | Prod-1021748   | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS| 4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain|08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS| | Kitchen Sinks        |
 
-The prepared dataset is subsequently converted to a document term
-matrix, through standard text mining techniques. A document-term
-matrix or term-document matrix is a mathematical matrix that describes
-the frequency of terms that occur in a collection of documents. In a
-document-term matrix, rows correspond to documents (SKU’s in this case)
-in the collection and columns correspond to terms (Dependent variables).
+The prepared dataset is subsequently converted to a document term matrix, through standard text mining techniques. A document-term matrix or term-document matrix is a mathematical matrix that describes the frequency of terms that occur in a collection of documents. In a document-term matrix, rows correspond to documents (SKU’s in this case) in the collection and columns correspond to terms (Dependent variables).
 
-<h3> Data Modeling</h3>
-The document term matrix is split into the training and test set on an
-80:20 ratio. The identified features are considered as the independent
-variables and FOL link & GPH as the dependent variables for the modeling
-process,
+<h3>Data Modeling</h3>
+The document term matrix is split into the training and test set on an 80:20 ratio. The identified features are considered as the independent variables and FOL link & GPH as the dependent variables for the modeling process,
 
 1.  Random sample (80% sample)
 
@@ -157,31 +148,23 @@ predictions.
 
 
 <h3> Model Testing</h3> 
-The predictive ability of each model was compared to determine which is
-to be used for product classification. A 5-Fold cross validation was
-carried out to validate the accuracy of the model.
+The predictive ability of each model was compared to determine which is to be used for product classification. A 5-Fold cross validation was carried out to validate the accuracy of the model.
 
-The neural network model is selected due to its higher accuracy and
-coverage,
+The neural network model is selected due to its higher accuracy and coverage,
 
-*Without threshold:*
+**Without threshold:**
 FOL: Accuracy = 94.1%
 GPH: Accuracy = 95.1%
 
-*With threshold:*
+**With threshold:**
 FOL: Accuracy = 99% Coverage = 75%
 GPH: Accuracy = 99% Coverage = 80%
 
-Model Results:
-Once trained on the ~50k SKU’s, the neural network model’s classifying
-ability is verified on the test set. Product categorization is done for
-FOL link and GPH classification. The required test set is fed into the
-model, giving the following results,
+**Model Results:**
+Once trained on the ~50k SKU’s, the neural network model’s classifying ability is verified on the test set. Product categorization is done for FOL link and GPH classification. The required test set is fed into the model, giving the following results,
 
-*Predicted Results for FOL:*
-
-The overall accuracy for FOL link classification is 94% with a standard
-deviation of 1.1%.
+**Predicted Results for FOL:**
+The overall accuracy for FOL link classification is 94% with a standard deviation of 1.1%.
 
 | **Total SKU’s 12,513** | **High Confidence 9,367 (75%)** | **Low Confidence 3146 (25%)** |
 |------------------------|---------------------------------|-------------------------------|
@@ -226,7 +209,7 @@ The GPH accuracy was also found to be consistent over multiple random samples,
 
 Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
-*Prediction of Unclassified SKU’s:*
+**Prediction of Unclassified SKU’s:**
 Predictions on the 7K SKUs where GPH was not classified resulted in an
 accuracy of 97% with a coverage of 57% for FOL.
 
@@ -256,16 +239,13 @@ The machine learning algorithm enables:
 
 -   A 50X increase in the GPH throughput with an overall accuracy of 95%
 
-
-<h2>Challenges</h2>
-**FOL:** Incomplete Data- Our model can only predict what it knows
-**GPH:** Unextractable data: data in product names
-
-
 <h2>Scope for Improvement</h2>
 -   Use entire dataset for model building
+
 -   Continual feedback iterations
+
 -   Recommendations around single-SKU classes
+
 -   Create post-prediction rules to accommodate class-specific nuances
 
 
