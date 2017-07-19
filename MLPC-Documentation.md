@@ -1,8 +1,8 @@
 <h1> PRODUCT CATEGORIZATION USING MACHINE LEARNING </h1>
 
-<h3> Powered By: *Tredence Analytics Solutions*</h3> 
+<h3> Powered By: Tredence Analytics Solutions </h3> 
 
-<h2> Introduction: </h2>
+<h2> Introduction</h2>
 The client requires an efficient product classification system, for easy
 navigation and product display on the client e-commerce website. This
 will allow customers to find their exact needs. Currently, out of the 3
@@ -25,7 +25,7 @@ algorithm on existing classified data and predicted the product family
 of unclassified products to test the accuracy of the model. To achieve
 this, a rigorous 4 step approach was followed,
 
-1.  Data Cleaning & Data Preparation
+1.  **Data Cleaning & Data Preparation**
 
     -   We identified the features / variables that influence the
         product classification
@@ -38,7 +38,7 @@ this, a rigorous 4 step approach was followed,
     -   Misclassified SKUs were identified manually and removed from the
         data analysis
 
-2.  Data Modeling
+2.  **Data Modeling**
 
     -   Standard text mining techniques were used to convert the data
         into a document term matrix to build the model
@@ -46,24 +46,24 @@ this, a rigorous 4 step approach was followed,
     -   A set of machine learning algorithms including Ensemble methods
         were trained on a random sample
 
-4.  Confidence Levels
+3.  **Confidence Metric and Threshold Computation **
 
     -   A cross validated threshold value was computed to signify the
         confidence of the predictions
 
-3.  Model Testing
+4.  **Model Testing**
 
     -   The trained models were tested on different set of SKUs
 
 
-<h3> Data Cleaning and Data Preparation: </h3> 
+<h3> Data Cleaning and Data Preparation</h3> 
 
 The data considered for the algorithm consists of ~70K SKU attributes.
 The data goes through a cleaning process to remove any discrepancies
 that might compromise the result. The prepared dataset is subsequently
 used for modeling.
 
-*Data Exclusions:*
+**Data Exclusions:**
 
 To avoid compromising the model, the following discrepancies were
 excluded from the data:
@@ -117,7 +117,7 @@ the frequency of terms that occur in a collection of documents. In a
 document-term matrix, rows correspond to documents (SKU’s in this case)
 in the collection and columns correspond to terms (Dependent variables).
 
-<h3> Data Modeling: </h3>
+<h3> Data Modeling</h3>
 The document term matrix is split into the training and test set on an
 80:20 ratio. The identified features are considered as the independent
 variables and FOL link & GPH as the dependent variables for the modeling
@@ -156,7 +156,7 @@ predictions.
 
 
 
-<h3> Model Testing: </h3> 
+<h3> Model Testing</h3> 
 The predictive ability of each model was compared to determine which is
 to be used for product classification. A 5-Fold cross validation was
 carried out to validate the accuracy of the model.
@@ -257,23 +257,19 @@ The machine learning algorithm enables:
 -   A 50X increase in the GPH throughput with an overall accuracy of 95%
 
 
-<h2>Challenges:</h2>
-*FOL:* Incomplete Data- Our model can only predict what it knows
-
-*GPH:* Unextractable data: data in product names
+<h2>Challenges</h2>
+**FOL:** Incomplete Data- Our model can only predict what it knows
+**GPH:** Unextractable data: data in product names
 
 
 <h2>Scope for Improvement</h2>
 -   Use entire dataset for model building
-
 -   Continual feedback iterations
-
 -   Recommendations around single-SKU classes
-
 -   Create post-prediction rules to accommodate class-specific nuances
 
 
-<h2>Code- Working Flow<h2>
+<h2>Code- Working Flow</h2>
 The code working flow is as follows,
 
 1.  First, please set the working directory where the provided sample
@@ -417,7 +413,7 @@ The code working flow is as follows,
         7.  The result (predicted FOL Link on unclassified data) is
             stored in “nn\_prob\_values”.
 
-    2.  Prediction for GPH : Same steps as FOL link prediction
+    2.  **Prediction for GPH** : Same steps as FOL link prediction
 
 Result example,
 
