@@ -77,7 +77,7 @@ excluded from the data:
 -   SKU with same attributes, but tagged to different FOL/GPH were
     excluded from the analysis
 
-    -   297 SKUs for FOL and 344 SKUs for GPH were excluded
+-   297 SKUs for FOL and 344 SKUs for GPH were excluded
 
 After exclusions, the dataset was reduced to ~62K SKUs
 
@@ -163,7 +163,9 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 | Wrong predictions      | 94 (1%)                         | 659 (21%)                     |
 
 **Overall accuracy: (9,273 + 2,487) / 12,513 = 94%**
+
 **Accuracy with Threshold: 9,273 / 9,367 = 99%**
+
 **Coverage: 9,367 / 12,513 = 75%**
 
 <h4>Predicted results for GPH</h4>
@@ -174,7 +176,9 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 | Wrong predictions      | 106(1%)                         | 521 (21%)                      |
 
 **Overall accuracy: (9,828 + 2,027) / 12,482 = 95%**
+
 **Accuracy with Threshold: 9,828 / 9,934 = 99%**
+
 **Coverage: 9,934 / 12,482 = 80%**
 
 
@@ -208,7 +212,9 @@ Predicted results for FOL,
 | Wrong predictions     | 138(1%)                              | 1,572(51%)                        |
 
 **Overall accuracy**: (3,986 + 1,547)/ 7,243 = 76.4%
+
 **Accuracy with Threshold**: 3,986 / 4,124 = 96.7%
+
 **Coverage**: 4,124 / 7,243 = 57%
 
 <h2>Impact</h2>
