@@ -9,13 +9,16 @@ Hence, we are building a robust machine learning engine using elements of superv
 
 <h2> Data Sources </h2>
 Data files on SKU attributes and abbreviation mapping file were extracted from STEP, Ferguson's master data management system. The data was pulled, understood and the relevant subset was derived with the help of three teams:
+
 1. IT MDM team (Point of contact: Richard Barber)
+
 2. E-business team (Point of contact: Jaclyn Aulich/ Kelly Amavisca)
+
 3. Product services team (Point of contact: Brittany Merritt)
 
 <h3>Sample Files</h3>
-**Sample.csv** : A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
-**abbrevation_mapping_dict.csv** : The SKU data uses short forms for its product descriptions. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
+**Sample.csv:** A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
+**abbrevation_mapping_dict.csv:** The SKU data uses short forms for its product descriptions. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
 
 
 <h2> Approach </h2> 
