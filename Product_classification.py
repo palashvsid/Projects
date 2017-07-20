@@ -1,5 +1,6 @@
-# ------------------------------------------------------PRODUCT CATEGORIZATION CODE-----------------------------------------------
+# -----------------PRODUCT CATEGORIZATION CODE---------------------------------
 
+#Importing the required packages, use pip/conda to install packages if not already installed
 import re
 import string
 import pandas as pd
@@ -13,13 +14,14 @@ os.chdir('PLEASE SET WORKING DIRECTORY AND HIT RUN')
 
 # Reading the enriched data#
 data = pd.read_csv("Sample.csv",encoding="latin")
+
 # Reading the mapping dictionary#
 mapping_dict = pd.read_csv("abbrevation_mapping_dict.csv",encoding="latin")
 
 
-# ---------------------------------------------------------USER DEFINED FUNCTIONS-----------------------------------------------
+# ---------------------------------USER DEFINED FUNCTIONS------------------------
 
-# Funciton to remove the last two pipe entries from the GPH path#
+# Function to remove the last two pipe entries from the GPH path#
 def remove_last_two_pipe(text, separator, sep_to_remove):
     temp = text.split(separator)
     max_len = len(temp)
@@ -43,14 +45,11 @@ def clean_text(text):
 
     return text
 
-
 def replace_space(text):
     return text.replace(" ", "_")
 
 
-# a function to vlook up the values from dictionary #
-
-
+# Function to look up the values from dictionary #
 def map_abbreviation(text, dictionary):
     text = str(text).strip()
     text = re.sub(r'[^\x00-\x7F]+', '', text)
@@ -76,8 +75,6 @@ def map_abbreviation(text, dictionary):
 
 
 # Function to remove duplicates from the data
-
-
 def remove_duplicate_data(data, list_of_idv, dv):
     remove_data = data.groupby(list_of_idv,
                                as_index=False).agg({dv: pd.Series.nunique})
@@ -101,7 +98,6 @@ def remove_duplicate_data(data, list_of_idv, dv):
 
 
 # Function to create unigram-bigram matrix
-
 def create_tdm_dataframe(data, column_name, num_words, suffix):
 
     from sklearn.feature_extraction.text import CountVectorizer
@@ -120,8 +116,6 @@ def create_tdm_dataframe(data, column_name, num_words, suffix):
 
 
 # Funtion to calculate threshold value
-
-
 def ratio_threshold(probabilities, prediction, expected, model_classes):
     collated_df = pd.DataFrame(probabilities, columns=model_classes.classes_)
     predicted_classes = pd.DataFrame(prediction, columns=["predicted_class"])
@@ -172,10 +166,7 @@ def ratio_threshold(probabilities, prediction, expected, model_classes):
     return(thresholdValue)
 
 
-# --------------------------------------------------------------DATA PREPARATION-------------------------------------------------
-
-
-
+# --------------------------------DATA PREPARATION------------------------
 # Clean the column names #
 data.columns = map(clean_text, data.columns)
 data.columns = map(replace_space, data.columns)
@@ -188,7 +179,6 @@ data['gph_cleaned'] = data['gph_full_path'].apply(
 # Expand the prod description and prod long description based on the mapping #
 data['prd_desc_expanded'] = data['productdesc'].apply(
     lambda x: map_abbreviation(x, mapping_dict))
-
 
 # Now map the long description columns as well with the fol link #
 
@@ -207,9 +197,8 @@ data['prd_long_desc_expanded'] = data['prd_long_desc_new'].apply(
 final_data = data[~data['gph_full_path'].str.contains("Onboarding")]
 
 
-# ----------------------------------------------------Product Categorization for GPH--------------------------------------------------
-# --------------------------------------------------------DOCUMENT TERM MATRIX-------------------------------------------------------
-
+# -------------------------------------Product Categorization for GPH-------------------------
+# ---------------------------------------DOCUMENT TERM MATRIX------------------------------
 # Deriving list of independent and dependent variables
 list_of_idv = [
     "productdesc",
@@ -265,7 +254,7 @@ dtm_data_gph = dtm_data_gph[~dtm_data_gph['gph_cleaned'].isin(
 # document term matrix has been created #
 
 
-# --------------------------------------------------------------Neural Network Model-------------------------------------------
+# -----------------------------Neural Network Model------------------------
 
 from sklearn.neural_network import MLPClassifier
 model = MLPClassifier(
@@ -279,7 +268,8 @@ model = MLPClassifier(
 # Creating train and test split
 from sklearn.model_selection import train_test_split
 X_train_gph, X_test_gph, Y_train_gph, Y_test_gph = train_test_split(
-    dtm_data_gph.iloc[:, dtm_data_gph.columns != 'gph_cleaned'], dtm_data_gph['gph_cleaned'], test_size=0.20, random_state=1234)
+    dtm_data_gph.iloc[:, dtm_data_gph.columns != 'gph_cleaned'], 
+    dtm_data_gph['gph_cleaned'], test_size=0.20, random_state=1234)
 
 # Training the model for GPH predictions using 80% dataset
 nn_fitted_gph = model.fit(X_train_gph, Y_train_gph)
@@ -294,7 +284,7 @@ gph_accuracy = metrics.accuracy_score(Y_test_gph, predicted_nn_gph)
 print(gph_accuracy)
 
 
-# ----------------------------------------------------------THRESHOLD VALUE CALCUATION----------------------------------- 
+# -------------------------------------THRESHOLD VALUE CALCUATION------------------------
 # threshold is calculated based on the user defined function
 gph_threshold = ratio_threshold(
     prob_nn_gph,
@@ -303,10 +293,8 @@ gph_threshold = ratio_threshold(
     nn_fitted_gph)
 
 
-# --------------------------------------------------PRODUCT CLASSIFICATION FOR FOL LINK---------------------------
-
-
-# ----------------------------------------------------DOCUMENT TERM MATRIX---------------------------------------------------:
+# -----------------------------PRODUCT CLASSIFICATION FOR FOL LINK-----------------------
+# ---------------------------------DOCUMENT TERM MATRIX-----------------------------------:
 
 
 list_of_idv = [
@@ -360,7 +348,7 @@ single_sku_classes = dtm_data_fol['fol_link'].value_counts()[
 dtm_data_fol = dtm_data_fol[~dtm_data_fol['fol_link'].isin(single_sku_classes)]
 
 
-# ----------------------------------------------------------Neural Network Model ----------------------------------#
+# ----------------------------------Neural Network Model -----------------------------#
 
 from sklearn.neural_network import MLPClassifier
 model = MLPClassifier(
@@ -373,7 +361,9 @@ model = MLPClassifier(
 
 from sklearn.model_selection import train_test_split
 X_train_fol, X_test_fol, Y_train_fol, Y_test_fol = train_test_split(
-    dtm_data_fol.iloc[:, dtm_data_fol.columns != 'fol_link'], dtm_data_fol['fol_link'], test_size=0.20, random_state=1234)
+    dtm_data_fol.iloc[:, dtm_data_fol.columns != 'fol_link'], 
+    dtm_data_fol['fol_link'], 
+    test_size=0.20, random_state=1234)
 
 # Training the model for FOL predictions on 80% data
 nn_fitted_fol = model.fit(X_train_fol, Y_train_fol)
@@ -388,7 +378,7 @@ fol_accuracy = metrics.accuracy_score(Y_test_fol, predicted_nn_fol)
 print(metrics.accuracy_score(Y_test_fol, predicted_nn_fol))
 
 
-# -------------------------------------------------------THRESHOLD VALUE CALCUATION---------------------------------------------------
+# ----------------------------THRESHOLD VALUE CALCUATION-------------------------------
 
 # Threshold calculated using the defined function
 fol_threshold = ratio_threshold(
@@ -398,8 +388,7 @@ fol_threshold = ratio_threshold(
     nn_fitted_fol)
 
 
-# ----------------------------------------------------- PRODUCT CLASSIFICATION ON UNCLASSIFIED SKU's------------------------------------
-
+# ----------------------------- PRODUCT CLASSIFICATION ON UNCLASSIFIED SKU's---------------------
 # -----------------------------------------------------------Prediction for FOL
 # Selecting the unclassified SKU's
 final_data1 = data[data['gph_full_path'].str.contains("Onboarding")]
@@ -501,7 +490,8 @@ nn_fit_fol100 = model.fit(dtm_data_fol.drop(
 # Training model on entire dataset
 # Use the following code model for GPH scoring,
 
-# nn_fit_gph100 = model.fit(dtm_data_gph.drop(dtm_data_gph.columns[-1:], axis=1), dtm_data_gph['gph_cleaned'])
+# nn_fit_gph100 = model.fit(dtm_data_gph.drop(dtm_data_gph.columns[-1:], axis=1), 
+# dtm_data_gph['gph_cleaned'])
 
 # Deriving predictions based on the learnt model
 nn_predicted_new = nn_fit_fol100.predict(X_test_fol1)
@@ -534,7 +524,7 @@ nn_prob_values["FOL_Prediction_confidence"] = nn_prob_values.apply(
         row["FOL_Ratio"] >= fol_threshold) else "Low Confidence", axis=1)
 
 
-# ---------------------------------------------------GPH predictions on unclassified
+# ---------------------------------------------------Prediction for GPH
 
 # Setting the independent and dependent variables
 list_of_idv = [
@@ -613,7 +603,8 @@ col_list_model.loc[col_list_model.index.max() + 1] = ['gph_cleaned']
 # Scoring using the trained model,
 # Here the model is trained on the entire dataset
 # Training the model on entire dataset for fol
-nn_fit_gph100 = model.fit(dtm_data_gph.drop(dtm_data_gph.columns[-1:], axis=1), dtm_data_gph['gph_cleaned'])
+nn_fit_gph100 = model.fit(dtm_data_gph.drop(dtm_data_gph.columns[-1:], axis=1), 
+                          dtm_data_gph['gph_cleaned'])
 
 # Deriving predictions based on the learnt model
 gph_predicted_new = nn_fit_gph100.predict(X_test_gph1)
