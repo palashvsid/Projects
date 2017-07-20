@@ -107,7 +107,7 @@ Dependent variables,
 
 | **&lt;ID&gt;** | **GPH Full Path**                                                                                                                                                                                                                                                                                                            | **&lt;FOL Link&gt;** |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| Prod-1021748   | 16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES>>19 COMMERCIAL SINKS>>08 KITCHEN SINKS>>4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain>>08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS | Kitchen Sinks        |
+| Prod-1021748   | 16 PLUMBING - FINISHED>>04 PLUMBING FIXTURES, PARTS AND ACCESSORIES>>19 COMMERCIAL SINKS>>08 KITCHEN SINKS>>4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain>>08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS | Kitchen Sinks        |
 
 The prepared dataset is subsequently converted to a document term matrix, through standard text mining techniques. A document-term matrix or term-document matrix is a mathematical matrix that describes the frequency of terms that occur in a collection of documents. In a document-term matrix, rows correspond to documents (SKUs in this case) in the collection and columns correspond to terms (Dependent variables).
 
@@ -150,20 +150,11 @@ predictions.
 <h3> Model Testing</h3> 
 The predictive ability of each model was compared to determine which is to be used for product classification. A 5-Fold cross validation was carried out to validate the accuracy of the model.
 
-The neural network model is selected due to its higher accuracy and coverage,
+The neural network model is selected due to its higher accuracy and coverage.
 
-**Without threshold:**
-FOL: Accuracy = 94.1%
-GPH: Accuracy = 95.1%
-
-**With threshold:**
-FOL: Accuracy = 99% Coverage = 75%
-GPH: Accuracy = 99% Coverage = 80%
-
-**Model Results:**
 Once trained on the ~50k SKUs, the neural network model’s classifying ability is verified on the test set. Product categorization is done for FOL link and GPH classification. The required test set is fed into the model, giving the following results,
 
-**Predicted Results for FOL:**
+<h3>Predicted Results for FOL</h3>
 The overall accuracy for FOL link classification is 94% with a standard deviation of 1.1%.
 
 | **Total SKUs 12,513** | **High Confidence 9,367 (75%)** | **Low Confidence 3146 (25%)** |
@@ -172,12 +163,10 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 | Wrong predictions      | 94 (1%)                         | 659 (21%)                     |
 
 **Overall accuracy: (9,273 + 2,487) / 12,513 = 94%**
-
 **Accuracy with Threshold: 9,273 / 9,367 = 99%**
-
 **Coverage: 9,367 / 12,513 = 75%**
 
-*Predicted results for GPH*:
+<h3>Predicted results for GPH</h3>
 
 | **Total SKUs 12,482** | **High Confidence 9,934 (80%)** | **Low Confidence 2,548 (20%)** |
 |------------------------|---------------------------------|--------------------------------|
@@ -185,9 +174,7 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 | Wrong predictions      | 106(1%)                         | 521 (21%)                      |
 
 **Overall accuracy: (9,828 + 2,027) / 12,482 = 95%**
-
 **Accuracy with Threshold: 9,828 / 9,934 = 99%**
-
 **Coverage: 9,934 / 12,482 = 80%**
 
 
@@ -209,7 +196,7 @@ The GPH accuracy was also found to be consistent over multiple random samples,
 
 Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
-**Prediction of Unclassified SKUs:**
+<h3>Prediction of Unclassified SKUs</h3>
 Predictions on the 7K SKUs where GPH was not classified resulted in an
 accuracy of 97% with a coverage of 57% for FOL.
 
@@ -221,15 +208,8 @@ Predicted results for FOL,
 | Wrong predictions     | 138(1%)                              | 1,572(51%)                        |
 
 **Overall accuracy**: (3,986 + 1,547)/ 7,243 = 76.4%
-
 **Accuracy with Threshold**: 3,986 / 4,124 = 96.7%
-
 **Coverage**: 4,124 / 7,243 = 57%
-
-We trained our models on different sets and made repeated predictions
-for 350 samples to find the variation in the accuracy. The Variation in
-the accuracy for FOL predictions varies by 1.1% for a random sample of
-350 SKUs.
 
 <h2>Impact</h2>
 The machine learning algorithm enables:
