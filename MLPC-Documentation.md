@@ -3,20 +3,20 @@
 <h3> Powered By: Tredence Analytics Solutions </h3> 
 
 <h2> Introduction</h2>
-The client requires an efficient product classification system, for easy
-navigation and product display on the client e-commerce website. This
-will allow customers to find their exact needs. Currently, out of the 3
-million SKUs in its inventory only 330k SKUs have been classified by a
-third-party contractor, at 7k SKUs per month. This is a manual and time
-consuming process with recurring expenses.
+The client requires an efficient product classification system, for easy navigation and product display on the client e-commerce website. This will allow customers to find their exact needs. Currently, out of the 3 million SKUs in its inventory only 330k SKUs have been classified by a third-party contractor, at 7k SKUs per month. This is a manual and time consuming process with recurring expenses.
 
-Hence, we are building a robust machine learning engine using elements
-of supervised/ unsupervised learning. The algorithm is developed based
-on existing SKUs which are already classified. The algorithm also
-accounts for the ability to identify and handle the introduction of new
-product families not available in the training data. Hence, this will
-allow the client to increase its classification throughput, automate the
-process, minimize expenses and eliminate manual errors.
+Hence, we are building a robust machine learning engine using elements of supervised/ unsupervised learning. The algorithm is developed based on existing SKUs which are already classified. The algorithm also accounts for the ability to identify and handle the introduction of new product families not available in the training data. Hence, this will allow the client to increase its classification throughput, automate the process, minimize expenses and eliminate manual errors.
+
+<h2> Data Sources </h2>
+Data files on SKU attributes and abbreviation mapping file were extracted from STEP, Ferguson's master data management system. The data was pulled, understood and the relevant subset was derived with the help of three teams:
+1. IT MDM team (Point of contact: Richard Barber)
+2. E-business team (Point of contact: Jaclyn Aulich/ Kelly Amavisca)
+3. Product services team (Point of contact: Brittany Merritt)
+
+<h3>Sample Files</h3>
+**Sample.csv**: A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
+**abbrevation_mapping_dict.csv**: The SKU data uses short forms for its product description. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
+
 
 <h2> Approach </h2> 
 Identifying the features of products within a product category will
