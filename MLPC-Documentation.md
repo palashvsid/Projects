@@ -154,7 +154,7 @@ The neural network model is selected due to its higher accuracy and coverage.
 
 Once trained on the ~50k SKUs, the neural network model’s classifying ability is verified on the test set. Product categorization is done for FOL link and GPH classification. The required test set is fed into the model, giving the following results,
 
-<h3>Predicted Results for FOL</h3>
+<h4>Predicted Results for FOL</h4>
 The overall accuracy for FOL link classification is 94% with a standard deviation of 1.1%.
 
 | **Total SKUs 12,513** | **High Confidence 9,367 (75%)** | **Low Confidence 3146 (25%)** |
@@ -166,7 +166,7 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 **Accuracy with Threshold: 9,273 / 9,367 = 99%**
 **Coverage: 9,367 / 12,513 = 75%**
 
-<h3>Predicted results for GPH</h3>
+<h4>Predicted results for GPH</h4>
 
 | **Total SKUs 12,482** | **High Confidence 9,934 (80%)** | **Low Confidence 2,548 (20%)** |
 |------------------------|---------------------------------|--------------------------------|
@@ -196,7 +196,7 @@ The GPH accuracy was also found to be consistent over multiple random samples,
 
 Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
-<h3>Prediction of Unclassified SKUs</h3>
+<h4>Prediction of Unclassified SKUs</h4>
 Predictions on the 7K SKUs where GPH was not classified resulted in an
 accuracy of 97% with a coverage of 57% for FOL.
 
