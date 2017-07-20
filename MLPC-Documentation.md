@@ -14,8 +14,8 @@ Data files on SKU attributes and abbreviation mapping file were extracted from S
 3. Product services team (Point of contact: Brittany Merritt)
 
 <h3>Sample Files</h3>
-**Sample.csv**: A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
-**abbrevation_mapping_dict.csv**: The SKU data uses short forms for its product descriptions. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
+**Sample.csv** : A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
+**abbrevation_mapping_dict.csv** : The SKU data uses short forms for its product descriptions. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
 
 
 <h2> Approach </h2> 
@@ -49,24 +49,17 @@ algorithm on existing classified data and predicted the product family of unclas
 
 <h3>Data Cleaning and Data Preparation</h3> 
 
-The data considered for the algorithm consists of ~70K SKU attributes.
-The data goes through a cleaning process to remove any discrepancies
-that might compromise the result. The prepared dataset is subsequently
-used for modeling.
+The data considered for the algorithm consists of ~70K SKU attributes. The data goes through a cleaning process to remove any discrepancies that might compromise the result. The prepared dataset is subsequently used for modeling.
 
 **Data Exclusions:**
 
-To avoid compromising the model, the following discrepancies were
-excluded from the data:
+To avoid compromising the model, the following discrepancies were excluded from the data:
 
--   7k SKUs were excluded while training/validating the model since GPH
-    was “unclassified”
+-   7k SKUs were excluded while training/validating the model since GPH was “unclassified”
 
--   18 FOL/ 122 GPH classes with single SKUs are excluded from training/
-    validating
+-   18 FOL/ 122 GPH classes with single SKUs are excluded from training/validating
 
--   SKU with same attributes, but tagged to different FOL/GPH were
-    excluded from the analysis
+-   SKU with same attributes, but tagged to different FOL/GPH were excluded from the analysis
 
 -   297 SKUs for FOL and 344 SKUs for GPH were excluded
 
@@ -94,7 +87,7 @@ Example: Independent variables,
 |----------------|--------------------------------------|--------------------|-----------------------------|-----------------------|
 | Prod-1021748   | 33X19 4H 2B SS SR KITC SINK \*STYLIS | JUST MANUFACTURING | JUST SS COMM WALL HUNG SINK | JUST MFG              |
 
-Dependent variables,
+Example: Dependent variables,
 
 | **&lt;ID&gt;** | **GPH Full Path**                                                                                                                                                                                                                                                                                                            | **&lt;FOL Link&gt;** |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
@@ -111,32 +104,20 @@ The document term matrix is split into the training and test set on an 80:20 rat
 
 3.  Machine learning – The following model were used for classification
 
-    -   Multinomial Naïve Bayes - A Probabilistic classifier based on
-        Bayes’ theorem
+    -   Multinomial Naïve Bayes - A Probabilistic classifier based on Bayes’ theorem
 
-    -   Random Forest – An ensemble learning method for classification/
-        regression by constructing multiple decision tress
+    -   Random Forest – An ensemble learning method for classification/ regression by constructing multiple decision tress
 
-    -   Support Vector Machine – A vector space algorithm for
-        classification by identifying a hyperplane that differentiate
-        classes
+    -   Support Vector Machine – A vector space algorithm for classification by identifying a hyperplane that differentiate classes
 
-    -   Neural Networks – A series of interconnected nodes that identify
-        the relationships b/w dependent & independent variable
+    -   Neural Networks – A series of interconnected nodes that identify the relationships b/w dependent & independent variable
 
-    -   Ensemble Method – Learning algorithms that construct a set of
-        classifiers and classify new data by voting
+    -   Ensemble Method – Learning algorithms that construct a set of classifiers and classify new data by voting
 
 4.  Validation and fine tuning (20% Sample)
 
 <h3>Confidence Metric and Threshold Computation </h3>
-Threshold is a probability based ratio to identify the confidence of the
-model. The ratio of the 1<sup>st</sup> and 2<sup>nd</sup> highest
-probabilities of a SKU is calculated to determine the threshold. It is
-used to distinguish between “high-confidence” and “low-confidence”
-predictions.
-
-
+Threshold is a probability based ratio to identify the confidence of the model. The ratio of the 1<sup>st</sup> and 2<sup>nd</sup> highest probabilities of a SKU is calculated to determine the threshold. It is used to distinguish between “high-confidence” and “low-confidence” predictions.
 
 <h3> Model Testing</h3> 
 The predictive ability of each model was compared to determine which is to be used for product classification. A 5-Fold cross validation was carried out to validate the accuracy of the model.
@@ -192,8 +173,7 @@ The GPH accuracy was also found to be consistent over multiple random samples,
 Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
 <h4>Prediction of Unclassified SKUs</h4>
-Predictions on the 7K SKUs where GPH was not classified resulted in an
-accuracy of 97% with a coverage of 57% for FOL.
+Predictions on the 7K SKUs where GPH was not classified resulted in an accuracy of 97% with a coverage of 57% for FOL.
 
 Predicted results for FOL,
 
@@ -211,8 +191,7 @@ Predicted results for FOL,
 <h2>Impact</h2>
 The machine learning algorithm enables:
 
--   A 28X increase in the FOL throughput with an overall
-    accuracy of 94%
+-   A 28X increase in the FOL throughput with an overall accuracy of 94%
 
 -   A 50X increase in the GPH throughput with an overall accuracy of 95%
 
@@ -229,146 +208,92 @@ The machine learning algorithm enables:
 <h2>Code- Working Flow</h2>
 The code working flow is as follows,
 
-1.  First, please set the working directory where the provided sample
-    and abbreviation data is stored. Then hit run.
+1.  First, please set the working directory where the provided sample and abbreviation data is stored. Then hit run.
 
-2.  **User defined functions:** These are the functions created for the
-    subsequent data cleaning, preparation and modeling purposes.
+2.  **User defined functions:** These are the functions created for the subsequent data cleaning, preparation and modeling purposes.
 
-    1.  Remove\_last\_two\_pipes: Function to remove the last two levels
-        in the GPH path. This is to derive the product family of
+    1.  Remove\_last\_two\_pipes: Function to remove the last two levels in the GPH path. This is to derive the product family of
         that product.
 
-    2.  Clean\_text: Function to clean the data. It removes special
-        characters, so that the result is not compromised.
+    2.  Clean\_text: Function to clean the data. It removes special characters, so that the result is not compromised.
 
-    3.  Replace\_space: Function to replace the spaces in columns
-        with “\_”.
+    3.  Replace\_space: Function to replace the spaces in columns with “\_”.
 
-    4.  Map\_abbreviation: Function to derive expand all abbreviations
-        in the data, i.e. derive the complete product description.
+    4.  Map\_abbreviation: Function to derive expand all abbreviations in the data, i.e. derive the complete product description.
 
-    5.  Remove\_duplicate\_data: Function to exclude duplicate SKUs
-        w.r.t to the independent and dependent variable attributes.
+    5.  Remove\_duplicate\_data: Function to exclude duplicate SKUs w.r.t to the independent and dependent variable attributes.
         These SKUs are misclassified and must be removed.
 
-    6.  Create\_tdm\_dataframe: Function to create the required document
-        term matrix. The independent variables are fed in to the
+    6.  Create\_tdm\_dataframe: Function to create the required document term matrix. The independent variables are fed in to the
         function to derive its unigrams and bigrams as the columns.
 
-    7.  Ratio\_threshold: Function to calculate the threshold value.
-        This is used to mark “high confidence” and “Low
-        confidence” predictions.
+    7.  Ratio\_threshold: Function to calculate the threshold value. This is used to mark “high confidence” and “Low confidence” predictions.
 
-3.  **Data Preparation:** The necessary information is derived as “data”
-    and is subsequently prepared as,
+3.  **Data Preparation:** The necessary information is derived as “data” and is subsequently prepared as,
 
-    1.  The columns of the dataset are cleaned using the clean\_text and
-        replace\_space functions.
+    1.  The columns of the dataset are cleaned using the clean\_text and replace\_space functions.
 
-    2.  The GPH column of the dataset is cleaned using the
-        remove\_last\_two\_pipes function.
+    2.  The GPH column of the dataset is cleaned using the remove\_last\_two\_pipes function.
 
-    3.  The product long description abbreviations are expanded using
-        the map\_abbreviation function.
+    3.  The product long description abbreviations are expanded using the map\_abbreviation function.
 
-    4.  All null and blank fields in the product long description field
-        is replaced with the product description field (A shorter
+    4.  All null and blank fields in the product long description field is replaced with the product description field (A shorter
         version of product long description).
 
-    5.  All SKUs with GPH tagged as onboarding are replaced. These
-        SKUs are unclassified and hence cannot be used to train the
+    5.  All SKUs with GPH tagged as onboarding are replaced. These SKUs are unclassified and hence cannot be used to train the
         machine learning engine.
 
-    6.  The final prepared dataset for machine learning is named as
-        “final\_data”
+    6.  The final prepared dataset for machine learning is named as “final\_data”
 
-4.  **Product classification for GPH:** This step involves training the
-    model to predict GPH classifications
+4.  **Product classification for GPH:** This step involves training the model to predict GPH classifications
 
-    1.  **Document term matrix:** It describes the frequency of terms
-        that occur in a collection of documents.
+    1.  **Document term matrix:** It describes the frequency of terms that occur in a collection of documents.
 
-        1.  The list of independent variables and dependent variables
-            are set.
+        1.  The list of independent variables and dependent variables are set.
 
-        2.  Misclassified data is removed from “final\_data” using
-            remove\_duplicate\_data function. The resultant dataset is
-            assigned as “gph\_final\_data”.
+        2.  Misclassified data is removed from “final\_data” using remove\_duplicate\_data function. The resultant dataset is assigned               as “gph\_final\_data”.
 
-        3.  The document term matrix is prepared from “gph\_final\_data”
-            using the create\_dtm\_dataframe function. Each independent
-            variable is fed into the function, creating unigrams and
-            bigrams for “Product long description” and unigrams for
-            “Linebuy id desc” & “Disc group id desc”. The vendor names
-            are assigned dummy variables (1 or 0).
+        3.  The document term matrix is prepared from “gph\_final\_data” using the create\_dtm\_dataframe function. Each independent                 variable is fed into the function, creating unigrams and bigrams for “Product long description” and unigrams for “Linebuy id             desc” & “Disc group id desc”. The vendor names are assigned dummy variables (1 or 0).
 
-        4.  “Dtm\_data1”,” Dtm\_data2”, “Dtm\_data4” and
-            vendor\_dummies” are”compiled together to derive the
-            document term matrix. The actual GPH classes are also
-            attached to this matrix.
+        4.  “Dtm\_data1”,” Dtm\_data2”, “Dtm\_data4” and vendor\_dummies” are”compiled together to derive the document term matrix. The             actual GPH classes are also attached to this matrix.
 
-        5.  In case of a column named “fit” it is renamed to
-            fit\_feature to avoid any discrepancy with the compiler.
+        5.  In case of a column named “fit” it is renamed to fit\_feature to avoid any discrepancy with the compiler.
 
         6.  All classes with a single SKU are excluded from the dataset.
 
     2.  **Neural network model for GPH:**
 
-        1.  The model metrics are set and the dataset is split into the
-            training and test set (80:20 ratio).
+        1.  The model metrics are set and the dataset is split into the training and test set (80:20 ratio).
 
-        2.  The model is trained and stored in “nn\_predicted\_gph”.
-            Subsequently the predicted classes and predicted
-            probabilities are stored in ‘’predicted\_nn\_gph” and
-            “prob\_nn\_gph” reapectively.
+        2.  The model is trained and stored in “nn\_predicted\_gph”. Subsequently the predicted classes and predicted probabilities are             stored in ‘’predicted\_nn\_gph” and “prob\_nn\_gph” reapectively.
 
-        3.  The accuracy of the model is also derived and stored
-            in “gph\_accuracy”.
+        3.  The accuracy of the model is also derived and stored in “gph\_accuracy”.
 
-    3.  **Threshold value calculation:** It is calculated using the
-        ratio\_threshold function.
+    3.  **Threshold value calculation:** It is calculated using the ratio\_threshold function.
 
-5.  **Product Classification for FOL link:** This step involves training
-    the model to predict FOL classifications. It follows the same
-    process as **STEP 4**, but here the dependent variable is replaced
-    as “**FOL Link**”.
+5.  **Product Classification for FOL link:** This step involves training the model to predict FOL classifications. It follows the same
+    process as **STEP 4**, but here the dependent variable is replaced as “**FOL Link**”.
 
 6.  **Product classification on the unclassified SKUs:**
 
     1.  **Prediction for FOL Link**
 
-        1.  Here the dataset is derived as final\_data1. This consists
-            of all SKUs with GPH tagged as onboarding. We predicted the
+        1.  Here the dataset is derived as final\_data1. This consists of all SKUs with GPH tagged as onboarding. We predicted the
             result on the FOL link which was available in the data.
 
-        2.  The required independent and dependent variables
-            are selected.
+        2.  The required independent and dependent variables are selected.
 
-        3.  Misclassified SKUs are removed from the data using
-            remove\_duplicate\_data function.
+        3.  Misclassified SKUs are removed from the data using remove\_duplicate\_data function.
 
-        4.  The document term matrix is prepared using the
-            create\_dtm\_dataframe function & vendor\_dummies. Then they
-            are compiled into a single dataframe.
+        4.  The document term matrix is prepared using the create\_dtm\_dataframe function & vendor\_dummies. Then they are compiled                 into a single dataframe.
 
-        5.  From line 446 to 469, the document term matrix created is
-            modified so that it has the same columns as the training
-            dataset on which the model learnt. Here, columns not present
-            in the document term matrix is attached and tagged as zero.
-            This is to ensure the machine learning engine scores based
-            on what it was trained, thereby giving
-            proper classifications.
+        5.  From line 446 to 469, the document term matrix created is modified so that it has the same columns as the training dataset               on which the model learnt. Here, columns not present in the document term matrix is attached and tagged as zero.
+            This is to ensure the machine learning engine scores based on what it was trained, thereby giving proper classifications.
 
-        6.  The independent variables and dependent variables are fixed.
-            The trained model (“nn\_fit\_fol100” in this case, as we are
-            predicting FOL links) is used to score the
-            unclassified dataset. This scored model is stored
-            in “nn\_predicted\_new”. Here the scoring is done using the
-            model trained on the complete dataset(62k SKUs)
+        6.  The independent variables and dependent variables are fixed. The trained model (“nn\_fit\_fol100” in this case, as we are
+            predicting FOL links) is used to score the unclassified dataset. This scored model is stored in “nn\_predicted\_new”. Here               the scoring is done using the model trained on the complete dataset(62k SKUs)
 
-        7.  The result (predicted FOL Link on unclassified data) is
-            stored in “nn\_prob\_values”.
+        7.  The result (predicted FOL Link on unclassified data) is stored in “nn\_prob\_values”.
 
     2.  **Prediction for GPH** : Same steps as FOL link prediction
 
