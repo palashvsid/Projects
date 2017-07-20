@@ -6,13 +6,13 @@
 The client requires an efficient product classification system, for easy
 navigation and product display on the client e-commerce website. This
 will allow customers to find their exact needs. Currently, out of the 3
-million SKU’s in its inventory only 330k SKU’s have been classified by a
-third-party contractor, at 7k SKU’s per month. This is a manual and time
+million SKUs in its inventory only 330k SKUs have been classified by a
+third-party contractor, at 7k SKUs per month. This is a manual and time
 consuming process with recurring expenses.
 
 Hence, we are building a robust machine learning engine using elements
 of supervised/ unsupervised learning. The algorithm is developed based
-on existing SKU’s which are already classified. The algorithm also
+on existing SKUs which are already classified. The algorithm also
 accounts for the ability to identify and handle the introduction of new
 product families not available in the training data. Hence, this will
 allow the client to increase its classification throughput, automate the
@@ -109,7 +109,7 @@ Dependent variables,
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
 | Prod-1021748   | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS| 4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain|08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS| | Kitchen Sinks        |
 
-The prepared dataset is subsequently converted to a document term matrix, through standard text mining techniques. A document-term matrix or term-document matrix is a mathematical matrix that describes the frequency of terms that occur in a collection of documents. In a document-term matrix, rows correspond to documents (SKU’s in this case) in the collection and columns correspond to terms (Dependent variables).
+The prepared dataset is subsequently converted to a document term matrix, through standard text mining techniques. A document-term matrix or term-document matrix is a mathematical matrix that describes the frequency of terms that occur in a collection of documents. In a document-term matrix, rows correspond to documents (SKUs in this case) in the collection and columns correspond to terms (Dependent variables).
 
 <h3>Data Modeling</h3>
 The document term matrix is split into the training and test set on an 80:20 ratio. The identified features are considered as the independent variables and FOL link & GPH as the dependent variables for the modeling process,
@@ -161,12 +161,12 @@ FOL: Accuracy = 99% Coverage = 75%
 GPH: Accuracy = 99% Coverage = 80%
 
 **Model Results:**
-Once trained on the ~50k SKU’s, the neural network model’s classifying ability is verified on the test set. Product categorization is done for FOL link and GPH classification. The required test set is fed into the model, giving the following results,
+Once trained on the ~50k SKUs, the neural network model’s classifying ability is verified on the test set. Product categorization is done for FOL link and GPH classification. The required test set is fed into the model, giving the following results,
 
 **Predicted Results for FOL:**
 The overall accuracy for FOL link classification is 94% with a standard deviation of 1.1%.
 
-| **Total SKU’s 12,513** | **High Confidence 9,367 (75%)** | **Low Confidence 3146 (25%)** |
+| **Total SKUs 12,513** | **High Confidence 9,367 (75%)** | **Low Confidence 3146 (25%)** |
 |------------------------|---------------------------------|-------------------------------|
 | Correct predictions    | 9,273 (99%)                     | 2,487 (79%)                   |
 | Wrong predictions      | 94 (1%)                         | 659 (21%)                     |
@@ -179,7 +179,7 @@ The overall accuracy for FOL link classification is 94% with a standard deviatio
 
 *Predicted results for GPH*:
 
-| **Total SKU’s 12,482** | **High Confidence 9,934 (80%)** | **Low Confidence 2,548 (20%)** |
+| **Total SKUs 12,482** | **High Confidence 9,934 (80%)** | **Low Confidence 2,548 (20%)** |
 |------------------------|---------------------------------|--------------------------------|
 | Correct predictions    | 9,828 (99%)                     | 22,027 (79%)                   |
 | Wrong predictions      | 106(1%)                         | 521 (21%)                      |
@@ -209,13 +209,13 @@ The GPH accuracy was also found to be consistent over multiple random samples,
 
 Increasing the threshold increases the accuracy and reduces the variation but results in lesser data being predicted.
 
-**Prediction of Unclassified SKU’s:**
+**Prediction of Unclassified SKUs:**
 Predictions on the 7K SKUs where GPH was not classified resulted in an
 accuracy of 97% with a coverage of 57% for FOL.
 
 Predicted results for FOL,
 
-| **Total SKU’s 7,243** | **Confident Predictions 4,124(56%)** | **Unclassified SKU’s 3,119(44%)** |
+| **Total SKUs 7,243** | **Confident Predictions 4,124(56%)** | **Unclassified SKUs 3,119(44%)** |
 |-----------------------|--------------------------------------|-----------------------------------|
 | Correct predictions   | 3,986(97%)                           | 1,547(49%)                        |
 | Wrong predictions     | 138(1%)                              | 1,572(51%)                        |
@@ -271,9 +271,9 @@ The code working flow is as follows,
     4.  Map\_abbreviation: Function to derive expand all abbreviations
         in the data, i.e. derive the complete product description.
 
-    5.  Remove\_duplicate\_data: Function to exclude duplicate SKU’s
+    5.  Remove\_duplicate\_data: Function to exclude duplicate SKUs
         w.r.t to the independent and dependent variable attributes.
-        These SKU’s are misclassified and must be removed.
+        These SKUs are misclassified and must be removed.
 
     6.  Create\_tdm\_dataframe: Function to create the required document
         term matrix. The independent variables are fed in to the
@@ -299,8 +299,8 @@ The code working flow is as follows,
         is replaced with the product description field (A shorter
         version of product long description).
 
-    5.  All SKU’s with GPH tagged as onboarding are replaced. These
-        SKU’s are unclassified and hence cannot be used to train the
+    5.  All SKUs with GPH tagged as onboarding are replaced. These
+        SKUs are unclassified and hence cannot be used to train the
         machine learning engine.
 
     6.  The final prepared dataset for machine learning is named as
@@ -357,18 +357,18 @@ The code working flow is as follows,
     process as **STEP 4**, but here the dependent variable is replaced
     as “**FOL Link**”.
 
-6.  **Product classification on the unclassified SKU’s:**
+6.  **Product classification on the unclassified SKUs:**
 
     1.  **Prediction for FOL Link**
 
         1.  Here the dataset is derived as final\_data1. This consists
-            of all SKU’s with GPH tagged as onboarding. We predicted the
+            of all SKUs with GPH tagged as onboarding. We predicted the
             result on the FOL link which was available in the data.
 
         2.  The required independent and dependent variables
             are selected.
 
-        3.  Misclassified SKU’s are removed from the data using
+        3.  Misclassified SKUs are removed from the data using
             remove\_duplicate\_data function.
 
         4.  The document term matrix is prepared using the
@@ -388,7 +388,7 @@ The code working flow is as follows,
             predicting FOL links) is used to score the
             unclassified dataset. This scored model is stored
             in “nn\_predicted\_new”. Here the scoring is done using the
-            model trained on the complete dataset(62k SKU’s)
+            model trained on the complete dataset(62k SKUs)
 
         7.  The result (predicted FOL Link on unclassified data) is
             stored in “nn\_prob\_values”.
