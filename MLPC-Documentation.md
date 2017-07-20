@@ -107,7 +107,7 @@ Dependent variables,
 
 | **&lt;ID&gt;** | **GPH Full Path**                                                                                                                                                                                                                                                                                                            | **&lt;FOL Link&gt;** |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| Prod-1021748   | Primary Product Hierarchy| Ferguson| Global Product Hierarchy|16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES|19 COMMERCIAL SINKS|08 KITCHEN SINKS| 4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain|08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS| | Kitchen Sinks        |
+| Prod-1021748   | 16 PLUMBING - FINISHED|04 PLUMBING FIXTURES, PARTS AND ACCESSORIES>>19 COMMERCIAL SINKS>>08 KITCHEN SINKS>>4-Hole 2-Bowl Drop-In, Self-Rimming and Topmount Rectangular Kitchen Sink with Center Drain>>08 JDLADA1933A46DCR 33X19 4H 2B SS SR KITC SINK \*STYLIS | Kitchen Sinks        |
 
 The prepared dataset is subsequently converted to a document term matrix, through standard text mining techniques. A document-term matrix or term-document matrix is a mathematical matrix that describes the frequency of terms that occur in a collection of documents. In a document-term matrix, rows correspond to documents (SKUs in this case) in the collection and columns correspond to terms (Dependent variables).
 
@@ -234,7 +234,7 @@ the accuracy for FOL predictions varies by 1.1% for a random sample of
 <h2>Impact</h2>
 The machine learning algorithm enables:
 
--   A 28X increase in the FOL throughput<sup>1</sup> with an overall
+-   A 28X increase in the FOL throughput with an overall
     accuracy of 94%
 
 -   A 50X increase in the GPH throughput with an overall accuracy of 95%
