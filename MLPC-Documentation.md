@@ -4,7 +4,7 @@
 
 <h2> Introduction</h2>
 The client requires an efficient product classification system, for easy navigation and product display on the client e-commerce website. This will allow customers to find their exact needs. Currently, out of the 3 million SKUs in its inventory only 330k SKUs have been classified by a third-party contractor, at 7k SKUs per month. This is a manual and time consuming process with recurring expenses.
-
+<br>
 Hence, we are building a robust machine learning engine using elements of supervised/ unsupervised learning. The algorithm is developed based on existing SKUs which are already classified. The algorithm also accounts for the ability to identify and handle the introduction of new product families not available in the training data. Hence, this will allow the client to increase its classification throughput, automate the process, minimize expenses and eliminate manual errors.
 
 <h2> Data Sources </h2>
@@ -15,41 +15,32 @@ Data files on SKU attributes and abbreviation mapping file were extracted from S
 
 <h3>Sample Files</h3>
 **Sample.csv**: A sample subset of the 70k SKUs belonging to the categories of Sinks and Pipe fittings
-**abbrevation_mapping_dict.csv**: The SKU data uses short forms for its product description. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
+**abbrevation_mapping_dict.csv**: The SKU data uses short forms for its product descriptions. Hence, for proper classification, this field is expanded using the abbreviation mapping file.
 
 
 <h2> Approach </h2> 
-Identifying the features of products within a product category will
-allow in efficient classification. We trained the machine learning
-algorithm on existing classified data and predicted the product family
-of unclassified products to test the accuracy of the model. To achieve
-this, a rigorous 4 step approach was followed,
+Identifying the features of products within a product category will allow in efficient classification. We trained the machine learning
+algorithm on existing classified data and predicted the product family of unclassified products to test the accuracy of the model. To achieve this, a rigorous 4 step approach was followed,
 
 1.  **Data Cleaning & Data Preparation**
 
-    -   We identified the features / variables that influence the
-        product classification
+    -   We identified the features / variables that influence the product classification
 
-    -   Special characters and stop words were excluded from textual
-        variables
+    -   Special characters and stop words were excluded from textual variables
 
     -   Lemmatization was carried out on all the textual descriptions
 
-    -   Misclassified SKUs were identified manually and removed from the
-        data analysis
+    -   Misclassified SKUs were identified manually and removed from the data analysis
 
 2.  **Data Modeling**
 
-    -   Standard text mining techniques were used to convert the data
-        into a document term matrix to build the model
+    -   Standard text mining techniques were used to convert the data into a document term matrix to build the model
 
-    -   A set of machine learning algorithms including Ensemble methods
-        were trained on a random sample
+    -   A set of machine learning algorithms including Ensemble methods were trained on a random sample
 
 3.  **Confidence Metric and Threshold Computation**
 
-    -   A cross validated threshold value was computed to signify the
-        confidence of the predictions
+    -   A cross validated threshold value was computed to signify the confidence of the predictions
 
 4.  **Model Testing**
 
