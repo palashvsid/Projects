@@ -1,0 +1,1 @@
+This folder contains raw unaggregated data for salaries, revenues, spending and participation for 2076 institutions under NCAA, NJCAA, NCCAA, NAIA, USCAA, CCCAA, etc. broken down across various sports.
